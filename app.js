@@ -9,15 +9,18 @@ var express = require('express')
   , path = require('path')
   , fs = require('fs')
   , Memore = require('./lib/memore')
-  , Clients = require('./lib/clients');
+  , argv = require('optimist')
+           .usage('Usage $0 -d [dir]')
+           .demand(['d'])
+           .describe('d', 'data dir')
+           .argv;
+
 
 var app = express()
   , server = http.createServer(app)
   , io = require('socket.io').listen(server);
 
-var memore = new Memore('./data');
-var clients = new Clients();
-clients.get_data = get_data;
+var memore = new Memore(argv.d);
 
 app.configure(function(){
   io.set('log level', 1);
@@ -58,8 +61,4 @@ server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
-function get_data(path){
-  return {html: memore.get_html('/' + path)}
-}
-
-io.sockets.on('connection', clients.connection_handler());
+io.sockets.on('connection', memore.clients.connection_handler());
