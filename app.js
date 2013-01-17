@@ -55,6 +55,7 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+app.get(app.locals.view_prefix + '*.pukiwiki', routes.pukiwiki);
 app.get(app.locals.view_prefix + '*', routes.index);
 
 server.listen(app.get('port'), function(){

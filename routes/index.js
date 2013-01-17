@@ -22,4 +22,17 @@ exports.index = function index(req, res){
 
   res.render('wikipage', {title: req.wiki_path
                          ,wiki_contents: html})
-};
+}
+
+exports.pukiwiki = function pukiwiki(req, res){
+  var path = req.wiki_path.match(/^(.*).pukiwiki$/)[1];
+  var text = req.memore.storage.get_as_pukiwiki(path);
+
+  if(text === undefined){
+    res.status(404);
+    res.end(req.wiki_path + ' not found');
+    return;
+  }
+
+  res.end(text);
+}
