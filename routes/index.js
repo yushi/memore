@@ -21,6 +21,7 @@ exports.index = function index(req, res){
   }
 
   res.render('wikipage', {title: req.wiki_path
+                         ,breadcrumbs: req.memore.view.breadcrumbs(req.wiki_path)
                          ,wiki_contents: html})
 }
 
