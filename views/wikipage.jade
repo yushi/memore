@@ -1,15 +1,15 @@
 extends layout
 
 block content
-  ul.breadcrumb
-    for i in breadcrumbs
-      if i.link === null
-        - if(i.is_dir === true){ i.name += ' /'}
-        li.active= i.name
-      else
-        li
-          a(href=i.link)= i.name
-          span.divider /
-
+  div.navbar.navbar-fixed-top
+    ul.breadcrumb
+      for i in breadcrumbs
+        if i.link === null
+          - if(i.is_dir === true){ i.name += ' /'}
+          li.active= i.name
+        else
+          li
+            a(href=i.link)= i.name
+            span.divider /
   div#wiki_contents
     |!{wiki_contents}

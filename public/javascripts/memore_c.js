@@ -1,3 +1,9 @@
+function update_toc(){
+  var ul = $('#toc').empty();
+  ul.append("<li>a</li>");
+  ul.append("<li>b</li>");
+}
+
 function decorate_table(){
   var table = $('div#wiki_contents table');
   table.addClass('table')
@@ -49,9 +55,11 @@ socket.on('news', function(data){
 socket.on('updated', function(data){
   replace_contents(data.html);
   decorate();
+  update_toc();
 });
 socket.emit('watch', location.pathname);
 
 $(document).ready(function(){
   decorate();
+  update_toc();
 })
