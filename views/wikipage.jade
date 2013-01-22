@@ -1,15 +1,25 @@
 extends layout
 
 block content
-  div.navbar.navbar-fixed-top
-    ul.breadcrumb
-      for i in breadcrumbs
-        if i.link === null
-          - if(i.is_dir === true){ i.name += ' /'}
-          li.active= i.name
-        else
-          li
-            a(href=i.link)= i.name
-            span.divider /
-  div#wiki_contents
-    |!{wiki_contents}
+    div.row-fluid
+      div#sidebar_div.span2
+        ul#sidebar.nav.nav-list.sidebar
+          li.nav-header header
+          li.divider
+
+      div#main_div.span10
+        small
+          a#toggle_toc.btn.btn-link(href="javascript:toggle_toc();") <<
+        div#breadcrumb
+          ul.breadcrumb
+            for i in breadcrumbs
+              if i.link === null
+                - if(i.is_dir === true){ i.name += ' /'}
+                li.active= i.name
+              else
+                li
+                  a(href=i.link)= i.name
+                  span.divider /
+
+        div#wiki_contents
+          |!{wiki_contents}

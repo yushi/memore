@@ -1,5 +1,4 @@
 div#wiki_contents {
-    padding: 50px;
 }
 
 hr.h2-end{
@@ -8,6 +7,9 @@ hr.h2-end{
 }
 
 h1.wiki_h1{
-    background-color: #eeeeee;
     margin-bottom: 50px;
+}
+
+.sidebar{
+  position: fixed;
 }

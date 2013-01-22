@@ -1,7 +1,64 @@
+function toggle_toc(){
+  var side = $('#sidebar_div');
+  var sidebar = $('#sidebar');
+  var main = $('#main_div');
+  if(side.hasClass('span2')){
+    side.removeClass('span2');
+    main.removeClass('span10');
+    main.addClass('span12');
+    sidebar.hide();
+    $('#toggle_toc').text('>>');
+  }else{
+    main.removeClass('span12');
+    side.addClass('span2');
+    main.addClass('span10');
+    sidebar.show();
+    $('#toggle_toc').text('<<');
+  }
+}
+
+function create_elem(tag, child, attrs){
+  var elem = $(document.createElement(tag));
+
+  if(typeof(child) === 'string'){
+    child = document.createTextNode(child);
+  }
+
+  if(child !== null){
+    elem.append(child);
+  }
+
+  for(var i in attrs){
+    elem.attr(i, attrs[i]);
+  }
+  return elem;
+}
+
+function repeated_str(str, count){
+  var repeated = '';
+  for(var i = 0; i < count; i++){
+    repeated += str;
+  }
+  return repeated;
+}
+
 function update_toc(){
-  var ul = $('#toc').empty();
-  ul.append("<li>a</li>");
-  ul.append("<li>b</li>");
+  var anchor_idx = 0;
+  var ul = $('#sidebar').empty();
+  var headers = $('div#wiki_contents h1, h2, h3, h4, h5, h6');
+
+  headers.each(function(i){
+    $(headers[i]).attr('id', 'anchor' + anchor_idx);
+    var val = $(headers[i]).text();
+    var level = parseInt(headers[i].tagName[1]);
+    var link = create_elem('a', val, {'href':'#anchor' + anchor_idx });
+    link.html(repeated_str('&nbsp;', (level-1) * 2) + link.html());
+
+    var elem = create_elem('li', create_elem('small', link))
+    ul.append(elem)
+
+    anchor_idx += 1;
+  });
 }
 
 function decorate_table(){
