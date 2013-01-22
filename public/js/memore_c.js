@@ -1,10 +1,12 @@
 function toggle_toc(){
   $('#sidebar_div').toggle(100, function(){
-    var icon = '<<';
-    if($('#toggle_toc').text() === icon){
-      icon = '>>'
+    if($('#toggle_toc_icon').hasClass('icon-step-backward')){
+      $('#toggle_toc_icon').removeClass('icon-step-backward')
+      $('#toggle_toc_icon').addClass('icon-step-forward')
+    }else{
+      $('#toggle_toc_icon').removeClass('icon-step-forward')
+      $('#toggle_toc_icon').addClass('icon-step-backward')
     }
-    $('#toggle_toc').text(icon);
   });
 }
 

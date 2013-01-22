@@ -8,10 +8,11 @@ block content
           li.divider
 
       div#main_div.span10
-        small
-          a#toggle_toc.btn.btn-link(href="javascript:toggle_toc();") <<
         div#breadcrumb
           ul.breadcrumb
+            li
+              a#toggle_toc.btn.btn-link(href="javascript:toggle_toc();")
+                i#toggle_toc_icon.icon-step-backward
             for i in breadcrumbs
               if i.link === null
                 - if(i.is_dir === true){ i.name += ' /'}
