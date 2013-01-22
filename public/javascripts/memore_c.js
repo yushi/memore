@@ -1,20 +1,11 @@
 function toggle_toc(){
-  var side = $('#sidebar_div');
-  var sidebar = $('#sidebar');
-  var main = $('#main_div');
-  if(side.hasClass('span2')){
-    side.removeClass('span2');
-    main.removeClass('span10');
-    main.addClass('span12');
-    sidebar.hide();
-    $('#toggle_toc').text('>>');
-  }else{
-    main.removeClass('span12');
-    side.addClass('span2');
-    main.addClass('span10');
-    sidebar.show();
-    $('#toggle_toc').text('<<');
-  }
+  $('#sidebar_div').toggle(100, function(){
+    var icon = '<<';
+    if($('#toggle_toc').text() === icon){
+      icon = '>>'
+    }
+    $('#toggle_toc').text(icon);
+  });
 }
 
 function create_elem(tag, child, attrs){
