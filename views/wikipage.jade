@@ -1,26 +1,25 @@
 extends layout
 
 block content
-    div.row-fluid
-      div#sidebar_div.span2
-        ul#sidebar.nav.nav-list.sidebar
-          li.nav-header header
-          li.divider
+  div#sidebar_div.span3.well
+    ul#sidebar.nav.nav-list
+      li.nav-header header
+      li.divider
 
-      div#main_div.span10
-        div#breadcrumb
-          ul.breadcrumb
+  div#main_div.offset3.span12
+    div#breadcrumb
+      ul.breadcrumb
+        li
+          a#toggle_toc.btn.btn-link(href="javascript:toggle_toc();")
+            i#toggle_toc_icon.icon-step-backward
+        for i in breadcrumbs
+          if i.link === null
+            - if(i.is_dir === true){ i.name += ' /'}
+            li.active= i.name
+          else
             li
-              a#toggle_toc.btn.btn-link(href="javascript:toggle_toc();")
-                i#toggle_toc_icon.icon-step-backward
-            for i in breadcrumbs
-              if i.link === null
-                - if(i.is_dir === true){ i.name += ' /'}
-                li.active= i.name
-              else
-                li
-                  a(href=i.link)= i.name
-                  span.divider /
+              a(href=i.link)= i.name
+              span.divider /
 
-        div#wiki_contents
-          |!{wiki_contents}
+    div#wiki_contents
+      |!{wiki_contents}

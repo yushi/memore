@@ -10,6 +10,12 @@ h1.wiki_h1{
     margin-bottom: 50px;
 }
 
-.sidebar{
-  position: fixed;
+#sidebar_div{
+    top: 20px;
+    position: fixed;
+    padding: 0px;
+}
+
+.toc_highlight{
+    background-color: black;
 }

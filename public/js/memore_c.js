@@ -1,13 +1,23 @@
 function toggle_toc(){
-  $('#sidebar_div').toggle(100, function(){
-    if($('#toggle_toc_icon').hasClass('icon-step-backward')){
-      $('#toggle_toc_icon').removeClass('icon-step-backward')
-      $('#toggle_toc_icon').addClass('icon-step-forward')
-    }else{
-      $('#toggle_toc_icon').removeClass('icon-step-forward')
-      $('#toggle_toc_icon').addClass('icon-step-backward')
-    }
-  });
+  var main = $('#main_div');
+
+  if($('#toggle_toc_icon').hasClass('icon-step-backward')){
+    $('#toggle_toc_icon').removeClass('icon-step-backward')
+    $('#toggle_toc_icon').addClass('icon-step-forward')
+    $('#sidebar_div').hide();
+  }else{
+    $('#toggle_toc_icon').removeClass('icon-step-forward')
+    $('#toggle_toc_icon').addClass('icon-step-backward')
+    $('#sidebar_div').show();
+  }
+
+  if(main.hasClass('offset3')){
+    $('#main_div').removeClass('offset3');
+    $('#main_div').addClass('offset0');
+  }else{
+    $('#main_div').removeClass('offset0');
+    $('#main_div').addClass('offset3');
+  }
 }
 
 function create_elem(tag, child, attrs){
@@ -112,4 +122,25 @@ socket.emit('watch', location.pathname);
 $(document).ready(function(){
   decorate();
   update_toc();
+
+  $(document).scroll(function(){
+    var pos = $(window).scrollTop();
+    var headers = $('#wiki_contents h1, h2, h3, h4, h5, h6');
+    $(headers.get().reverse()).each(function(i){
+      if($(headers[i]).offset().top > pos){
+        console.log(headers[i].id);
+
+        var toc_links = $('#sidebar a');
+        toc_links.each(function(j){
+          if($(toc_links[j]).attr('href') === '#' + headers[i].id){
+            $(toc_links[j]).parent().parent().addClass('active');
+          }else{
+            $(toc_links[j]).parent().parent().removeClass('active');
+          }
+        })
+        return false;
+      }
+      return true;
+    });
+  })
 })
