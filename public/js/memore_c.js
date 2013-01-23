@@ -136,6 +136,7 @@ function toc_highlight(){
   });
 
   $('[href=#' + nearest.id + ']').parent().addClass('active');
+  location.hash = nearest.id;
 }
 
 socket.on('updated', function(data){
@@ -149,4 +150,7 @@ $(document).ready(function(){
   decorate();
   update_toc();
   $(document).scroll(toc_highlight);
+
+  $('#pukiwikinize').attr('href', location.pathname + '.pukiwiki')
+  $('#pukiwikinize').attr('target', '_blank')
 })
