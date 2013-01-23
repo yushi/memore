@@ -136,7 +136,6 @@ function toc_highlight(){
   });
 
   $('[href=#' + nearest.id + ']').parent().addClass('active');
-  location.hash = nearest.id;
 }
 
 socket.on('updated', function(data){
