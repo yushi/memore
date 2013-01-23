@@ -54,10 +54,13 @@ function update_toc(){
     $(headers[i]).attr('id', 'anchor' + anchor_idx);
     var val = $(headers[i]).text();
     var level = parseInt(headers[i].tagName[1]);
-    var link = create_elem('a', val, {'href':'#anchor' + anchor_idx });
+    var link = create_elem('a', create_elem('small', val), {'href':'#anchor' + anchor_idx });
     link.html(repeated_str('&nbsp;', (level-1) * 2) + link.html());
 
-    var elem = create_elem('li', create_elem('small', link))
+    var elem = create_elem('li', link);
+    if(level === 1){
+      elem.addClass('nav-header');
+    }
     ul.append(elem)
 
     anchor_idx += 1;
@@ -133,9 +136,9 @@ $(document).ready(function(){
         var toc_links = $('#sidebar a');
         toc_links.each(function(j){
           if($(toc_links[j]).attr('href') === '#' + headers[i].id){
-            $(toc_links[j]).parent().parent().addClass('active');
+            $(toc_links[j]).parent().addClass('active');
           }else{
-            $(toc_links[j]).parent().parent().removeClass('active');
+            $(toc_links[j]).parent().removeClass('active');
           }
         })
         return false;
