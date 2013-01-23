@@ -19,3 +19,7 @@ h1.wiki_h1{
 .toc_highlight{
     background-color: black;
 }
+
+#bottom_space{
+    margin-bottom: 100%;
+}
