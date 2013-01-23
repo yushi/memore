@@ -115,6 +115,29 @@ var socket = io.connect('http://localhost')
 socket.on('news', function(data){
   socket.emit('other', {my: 'data'});
 })
+
+function toc_highlight(){
+  var pos = $(window).scrollTop();
+  var headers = $('#wiki_contents h1, h2, h3, h4, h5, h6');
+  var nearest;
+
+  $(headers).each(function(i){
+    if(!nearest){
+      nearest = headers[i];
+    }else{
+      var current = Math.abs($(nearest).offset().top - pos)
+      var next = Math.abs($(headers[i]).offset().top - pos)
+      if(current > next){
+        nearest = headers[i];
+      }
+    }
+    var link = $('[href=#' + headers[i].id + ']');
+    $(link).parent().removeClass('active');
+  });
+
+  $('[href=#' + nearest.id + ']').parent().addClass('active');
+}
+
 socket.on('updated', function(data){
   replace_contents(data.html);
   decorate();
@@ -125,25 +148,5 @@ socket.emit('watch', location.pathname);
 $(document).ready(function(){
   decorate();
   update_toc();
-
-  $(document).scroll(function(){
-    var pos = $(window).scrollTop();
-    var headers = $('#wiki_contents h1, h2, h3, h4, h5, h6');
-    $(headers.get().reverse()).each(function(i){
-      if($(headers[i]).offset().top > pos){
-        console.log(headers[i].id);
-
-        var toc_links = $('#sidebar a');
-        toc_links.each(function(j){
-          if($(toc_links[j]).attr('href') === '#' + headers[i].id){
-            $(toc_links[j]).parent().addClass('active');
-          }else{
-            $(toc_links[j]).parent().removeClass('active');
-          }
-        })
-        return false;
-      }
-      return true;
-    });
-  })
+  $(document).scroll(toc_highlight);
 })
